@@ -1,11 +1,11 @@
 package com.example.spotifyassignment.model.remote
 
-import com.example.spotifyassignment.model.remote.dto.ArtistDto
+import com.example.spotifyassignment.model.remote.dto.AlbumDto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class ArtistResponse: BaseResponse() {
+class AlbumResponse {
     @SerializedName("items")
     @Expose
-    var artists: List<ArtistDto>? = null
+    var artists: List<AlbumDto>? = null
 }
