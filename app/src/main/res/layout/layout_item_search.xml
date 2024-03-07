@@ -48,9 +48,9 @@
         app:layout_constraintStart_toStartOf="@id/cv_item_image"
         app:layout_constraintEnd_toEndOf="@id/cv_item_image"
         app:layout_constraintTop_toBottomOf="@id/tv_item_search_name"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintHorizontal_bias="0.1"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textColor="@color/material_blue_grey_100"
         android:text="@string/text_originalmix"
         />
@@ -64,9 +64,9 @@
         app:layout_constraintStart_toStartOf="@id/cv_item_image"
         app:layout_constraintEnd_toEndOf="@id/cv_item_image"
         app:layout_constraintTop_toBottomOf="@id/tv_item_search_creator"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintHorizontal_bias="0.1"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textColor="@color/material_blue_grey_100"
         android:text="@string/text_originalmix"
         />

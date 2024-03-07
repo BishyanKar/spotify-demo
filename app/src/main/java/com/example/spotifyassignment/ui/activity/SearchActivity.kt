@@ -52,6 +52,9 @@ class SearchActivity : AppCompatActivity() {
                 if (searchResponse.errorResponse != null) {
                     Timber.e("Error", searchResponse.errorResponse)
                     Toast.makeText(this, resources.getString(R.string.text_error_msg), Toast.LENGTH_SHORT).show()
+                } else {
+                    // all good, got our search response
+                    searchViewModel.updateCache(searchResponse)
                 }
             } else {
                 Timber.e(apiResponse.errorMessage)
