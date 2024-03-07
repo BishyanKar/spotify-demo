@@ -68,7 +68,7 @@ class EpisodeDto {
 
     @SerializedName("resume_point")
     @Expose
-    var resumePoint: ResumePoint? = null
+    var resumePoint: ResumePointDto? = null
 
     @SerializedName("type")
     @Expose
