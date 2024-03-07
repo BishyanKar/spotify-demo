@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
 class ShowResponse: BaseResponse() {
     @SerializedName("items")
     @Expose
-    var artists: List<ShowDto>? = null
+    var items: List<ShowDto> = ArrayList()
 }

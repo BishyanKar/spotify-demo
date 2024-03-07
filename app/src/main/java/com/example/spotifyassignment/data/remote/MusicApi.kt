@@ -10,6 +10,6 @@ interface MusicApi {
     @GET("/search")
     fun getMusicItems(
         @Query("q") query: String,
-        @Query("type") type: String
+        @Query("type") types: List<String>
     ): LiveData<ApiResponse<SearchResponse>>
 }

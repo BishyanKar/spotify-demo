@@ -9,7 +9,7 @@ import javax.inject.Inject
 class SearchRemoteRepository @Inject constructor(
     private val musicApi: MusicApi
 ) {
-    fun getAllMusicItems(query: String, type: String): LiveData<ApiResponse<SearchResponse>> {
-        return musicApi.getMusicItems(query, type);
+    fun getAllMusicItems(query: String, types: List<String>): LiveData<ApiResponse<SearchResponse>> {
+        return musicApi.getMusicItems(query, types);
     }
 }

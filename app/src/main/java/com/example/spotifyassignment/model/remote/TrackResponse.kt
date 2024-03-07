@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
 class TrackResponse: BaseResponse() {
     @SerializedName("items")
     @Expose
-    var tracks: List<TrackDto>? = null
+    var items: List<TrackDto> = ArrayList()
 }

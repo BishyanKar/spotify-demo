@@ -4,43 +4,33 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "tbl_audio_book")
-class AudioBookEntity {
+data class AudioBookEntity (
 
     @PrimaryKey
-    var id: String? = null
+    var id: String? = null,
 
-    var authors: List<String>? = null
+    var authors: List<String>? = null,
 
-    var availableMarkets: List<String>? = null
+    var description: String? = null,
 
-    var copyrights: List<CopyrightEntity>? = null
+    var edition: String? = null,
 
-    var description: String? = null
+    var explicit: Boolean? = null,
 
-    var htmlDescription: String? = null
+    var imgUrls: List<String>? = null,
 
-    var edition: String? = null
+    var mediaType: String? = null,
 
-    var explicit: Boolean? = null
+    var name: String? = null,
 
-    var audioBookDetailsLink: String? = null
+    var narrators: List<String>? = null,
 
-    var imgUrls: List<String>? = null
+    var publisher: String? = null,
 
-    var languages: List<String>? = null
+    var type: String? = null,
 
-    var mediaType: String? = null
-
-    var name: String? = null
-
-    var narrators: List<String>? = null
-
-    var publisher: String? = null
-
-    var type: String? = null
-
-    var uri: String? = null
+    var uri: String? = null,
 
     var totalChapters: Int? = null
-}
+)
 
