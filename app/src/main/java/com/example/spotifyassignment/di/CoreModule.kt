@@ -15,6 +15,7 @@ import com.example.spotifyassignment.data.local.dao.PlayListDao
 import com.example.spotifyassignment.data.local.dao.ShowDao
 import com.example.spotifyassignment.data.local.dao.TrackDao
 import com.example.spotifyassignment.data.remote.AuthApi
+import com.example.spotifyassignment.data.remote.AuthInterceptor
 import com.example.spotifyassignment.data.remote.MusicApi
 import com.example.spotifyassignment.repository.AuthRepository
 import com.example.spotifyassignment.repository.SearchLocalRepository
@@ -154,7 +155,8 @@ object CoreModule {
     @Singleton
     @Provides
     fun provideMusicApi(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        sharedPreferences: SharedPreferences
     ): MusicApi = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(Constants.BASE_MUSIC_URL)
@@ -163,6 +165,7 @@ object CoreModule {
             OkHttpClient
                 .Builder()
                 .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(AuthInterceptor(sharedPreferences))
                 .connectTimeout(5, TimeUnit.MINUTES)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)

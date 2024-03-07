@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.spotifyassignment.R
@@ -21,6 +23,7 @@ import com.example.spotifyassignment.viewmodel.SearchViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
@@ -38,6 +41,23 @@ class SearchActivity : AppCompatActivity() {
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
 
         initViewPager()
+
+        searchMusic("something")
+    }
+
+    private fun searchMusic(query: String) {
+        searchViewModel.searchMusic(query).observe(this, Observer {apiResponse->
+            if (apiResponse.isSuccessful && apiResponse.body != null) {
+                val searchResponse = apiResponse.body
+                if (searchResponse.errorResponse != null) {
+                    Timber.e("Error", searchResponse.errorResponse)
+                    Toast.makeText(this, resources.getString(R.string.text_error_msg), Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Timber.e(apiResponse.errorMessage)
+                Toast.makeText(this, resources.getString(R.string.text_error_msg), Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun initViewPager() {

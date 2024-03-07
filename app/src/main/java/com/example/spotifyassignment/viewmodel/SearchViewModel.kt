@@ -1,5 +1,6 @@
 package com.example.spotifyassignment.viewmodel
 
+import ApiResponse
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -35,24 +36,22 @@ class SearchViewModel @Inject constructor(
     //todo expose the cache list live datas
 
     val tracks: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
-    val albums: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
-    val artists: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
-    val audioBooks: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
-    val episodes: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
-    val playLists: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
-    val shows: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
+    val albums: LiveData<List<AlbumEntity>> = searchLocalRepository.allAlbums.asLiveData()
+    val artists: LiveData<List<ArtistEntity>> = searchLocalRepository.allArtists.asLiveData()
+    val audioBooks: LiveData<List<AudioBookEntity>> = searchLocalRepository.allAudioBooks.asLiveData()
+    val episodes: LiveData<List<EpisodeEntity>> = searchLocalRepository.allEpisodes.asLiveData()
+    val playLists: LiveData<List<PlayListEntity>> = searchLocalRepository.allPlayLists.asLiveData()
+    val shows: LiveData<List<ShowEntity>> = searchLocalRepository.allShows.asLiveData()
 
     private val searchTypes = arrayListOf("album", "artist", "playlist", "track", "show", "episode", "audiobook")
 
     final val searchTabs = arrayListOf("Album", "Artist", "Playlist", "Track", "Show", "Episode", "AudioBook")
 
-    fun searchMusic(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchRemoteRepository.getAllMusicItems(
-                query,
-                searchTypes
-            )
-        }
+    fun searchMusic(query: String): LiveData<ApiResponse<SearchResponse>> {
+        return searchRemoteRepository.getAllMusicItems(
+            query,
+            searchTypes
+        )
     }
 
     fun updateCache(searchResponse: SearchResponse) {

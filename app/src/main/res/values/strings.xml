@@ -5,4 +5,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="text_artist">Artists</string>
+    <string name="text_originalmix">OriginalMix</string>
+    <string name="text_authentication_failed">Authentication Failed</string>
+    <string name="text_error_msg">Something went wrong</string>
 </resources>
