@@ -19,15 +19,11 @@ import com.example.spotifyassignment.model.remote.PlayListResponse
 import com.example.spotifyassignment.model.remote.SearchResponse
 import com.example.spotifyassignment.model.remote.ShowResponse
 import com.example.spotifyassignment.model.remote.TrackResponse
-import com.example.spotifyassignment.model.remote.dto.AlbumDto
-import com.example.spotifyassignment.model.remote.dto.ArtistDto
-import com.example.spotifyassignment.model.remote.dto.ImageDto
 import com.example.spotifyassignment.repository.SearchLocalRepository
 import com.example.spotifyassignment.repository.SearchRemoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.stream.Collector
 import java.util.stream.Collectors
 import javax.inject.Inject
 
@@ -57,69 +53,58 @@ class SearchViewModel @Inject constructor(
 
     fun updateCache(searchResponse: SearchResponse) {
         //assumed to be error free response, the check should happen in UI
-        updateAlbumCache(searchResponse.albumResponse ?: AlbumResponse())
-        updateArtistCache(searchResponse.artistResponse ?: ArtistResponse())
-        updateEpisodeCache(searchResponse.episodeResponse ?: EpisodeResponse())
-        updateAudioBookCache(searchResponse.audioBookResponse ?: AudioBookResponse())
-        updateShowCache(searchResponse.showResponse ?: ShowResponse())
-        updatePlayListCache(searchResponse.playListResponse ?: PlayListResponse())
-        updateTrackCache(searchResponse.trackResponse ?: TrackResponse())
-    }
-
-    fun updateAlbumCache(albumResponse: AlbumResponse) {
         viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.insertAll(
-                getAlbumEntitiesFromResponse(albumResponse)
-            )
+            deleteAllCache()
+            updateAlbumCache(searchResponse.albumResponse ?: AlbumResponse())
+            updateArtistCache(searchResponse.artistResponse ?: ArtistResponse())
+            updateEpisodeCache(searchResponse.episodeResponse ?: EpisodeResponse())
+            updateAudioBookCache(searchResponse.audioBookResponse ?: AudioBookResponse())
+            updateShowCache(searchResponse.showResponse ?: ShowResponse())
+            updatePlayListCache(searchResponse.playListResponse ?: PlayListResponse())
+            updateTrackCache(searchResponse.trackResponse ?: TrackResponse())
         }
     }
 
-    fun updateArtistCache(artistResponse: ArtistResponse) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.insertAll(
-                getArtistEntitiesFromResponse(artistResponse)
-            )
-        }
+    suspend fun updateAlbumCache(albumResponse: AlbumResponse) {
+        searchLocalRepository.insertAllAlbums(
+            getAlbumEntitiesFromResponse(albumResponse)
+        )
     }
 
-    fun updateAudioBookCache(audioBookResponse: AudioBookResponse) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.insertAll(
-                getAudioBookEntitiesFromResponse(audioBookResponse)
-            )
-        }
+    suspend fun updateArtistCache(artistResponse: ArtistResponse) {
+        searchLocalRepository.insertAllArtists(
+            getArtistEntitiesFromResponse(artistResponse)
+        )
     }
 
-    fun updateEpisodeCache(episodeResponse: EpisodeResponse) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.insertAll(
-                getEpisodeEntitiesFromResponse(episodeResponse)
-            )
-        }
+    suspend fun updateAudioBookCache(audioBookResponse: AudioBookResponse) {
+        searchLocalRepository.insertAllAudioBooks(
+            getAudioBookEntitiesFromResponse(audioBookResponse)
+        )
     }
 
-    fun updatePlayListCache(playListResponse: PlayListResponse) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.insertAll(
-                getPlayListEntitiesFromResponse(playListResponse)
-            )
-        }
+    suspend fun updateEpisodeCache(episodeResponse: EpisodeResponse) {
+        searchLocalRepository.insertAllEpisodes(
+            getEpisodeEntitiesFromResponse(episodeResponse)
+        )
     }
 
-    fun updateShowCache(showResponse: ShowResponse) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.insertAll(
-                getShowEntitiesFromResponse(showResponse)
-            )
-        }
+    suspend fun updatePlayListCache(playListResponse: PlayListResponse) {
+        searchLocalRepository.insertAllPlayLists(
+            getPlayListEntitiesFromResponse(playListResponse)
+        )
     }
 
-    fun updateTrackCache(trackResponse: TrackResponse) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.insertAll(
-                getTrackEntitiesFromResponse(trackResponse)
-            )
-        }
+    suspend fun updateShowCache(showResponse: ShowResponse) {
+        searchLocalRepository.insertAllShows(
+            getShowEntitiesFromResponse(showResponse)
+        )
+    }
+
+    suspend fun updateTrackCache(trackResponse: TrackResponse) {
+        searchLocalRepository.insertAllTracks(
+            getTrackEntitiesFromResponse(trackResponse)
+        )
     }
 
     fun getAlbumEntitiesFromResponse(albumResponse: AlbumResponse): List<AlbumEntity> {

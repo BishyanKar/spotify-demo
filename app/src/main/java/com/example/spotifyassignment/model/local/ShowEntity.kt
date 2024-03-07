@@ -4,13 +4,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import javax.annotation.Nonnull
 
 
 @Entity(tableName = "tbl_show")
 data class ShowEntity (
 
     @PrimaryKey
-    var id: String? = null,
+    @Nonnull
+    var id: String,
 
     var description: String? = null,
 

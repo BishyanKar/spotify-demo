@@ -62,31 +62,31 @@ class SearchLocalRepository @Inject constructor(
         return trackDao.getTrackById(id)
     }
 
-    suspend fun insertAll(albumEntities: List<AlbumEntity>) {
+    suspend fun insertAllAlbums(albumEntities: List<AlbumEntity>) {
         albumDao.insertAll(albumEntities)
     }
 
-    suspend fun insertAll(artistEntities: List<ArtistEntity>) {
+    suspend fun insertAllArtists(artistEntities: List<ArtistEntity>) {
         artistDao.insertAll(artistEntities)
     }
 
-    suspend fun insertAll(audioBookEntities: List<AudioBookEntity>) {
+    suspend fun insertAllAudioBooks(audioBookEntities: List<AudioBookEntity>) {
         audioBookDao.insertAll(audioBookEntities)
     }
 
-    suspend fun insertAll(episodeEntities: List<EpisodeEntity>) {
+    suspend fun insertAllEpisodes(episodeEntities: List<EpisodeEntity>) {
         episodeDao.insertAll(episodeEntities)
     }
 
-    suspend fun insertAll(playListEntities: List<PlayListEntity>) {
+    suspend fun insertAllPlayLists(playListEntities: List<PlayListEntity>) {
         playListDao.insertAll(playListEntities)
     }
 
-    suspend fun insertAll(showEntities: List<ShowEntity>) {
+    suspend fun insertAllShows(showEntities: List<ShowEntity>) {
         showDao.insertAll(showEntities)
     }
 
-    suspend fun insertAll(trackEntities: List<TrackEntity>) {
+    suspend fun insertAllTracks(trackEntities: List<TrackEntity>) {
         trackDao.insertAll(trackEntities)
     }
 

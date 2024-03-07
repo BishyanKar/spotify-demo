@@ -35,7 +35,7 @@ class TrackDto {
 
     @SerializedName("id")
     @Expose
-    var id: String? = null
+    var id: String = ""
 
     @SerializedName("is_playable")
     @Expose

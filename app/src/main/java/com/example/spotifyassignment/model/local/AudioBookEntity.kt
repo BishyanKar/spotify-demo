@@ -2,12 +2,14 @@ package com.example.spotifyassignment.model.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import javax.annotation.Nonnull
 
 @Entity(tableName = "tbl_audio_book")
 data class AudioBookEntity (
 
     @PrimaryKey
-    var id: String? = null,
+    @Nonnull
+    var id: String,
 
     var authors: List<String>? = null,
 

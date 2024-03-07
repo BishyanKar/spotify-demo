@@ -2,12 +2,14 @@ package com.example.spotifyassignment.model.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import javax.annotation.Nonnull
 
 @Entity(tableName = "tbl_artist")
 data class ArtistEntity (
 
     @PrimaryKey
-    var id: String? = null,
+    @Nonnull
+    var id: String,
 
     var totalFollowers: Int? = null,
 

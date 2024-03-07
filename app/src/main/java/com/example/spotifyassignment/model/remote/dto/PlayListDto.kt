@@ -19,7 +19,7 @@ class PlayListDto {
 
     @SerializedName("id")
     @Expose
-    var id: String? = null
+    var id: String = ""
 
     @SerializedName("images")
     @Expose
