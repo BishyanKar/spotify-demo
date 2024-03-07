@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 interface AuthApi {
 
-    @POST("/token")
+    @POST("token")
     @FormUrlEncoded
     fun authenticate(
         @Field("grant_type") grantType: String,

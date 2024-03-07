@@ -1,28 +1,33 @@
 package com.example.spotifyassignment.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.LayoutInflater
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.example.spotifyassignment.R
 import com.example.spotifyassignment.databinding.ActivitySearchBinding
-import com.example.spotifyassignment.ui.adapter.SearchTypeAdapter
-import com.example.spotifyassignment.ui.adapter.listener.SearchTypeAdapterListener
+import com.example.spotifyassignment.databinding.LayoutItemSearchTypeBinding
+
+import com.example.spotifyassignment.ui.adapter.ViewPagerAdapter
+import com.example.spotifyassignment.ui.fragment.SearchAlbumFragment
+import com.example.spotifyassignment.ui.fragment.SearchArtistFragment
+import com.example.spotifyassignment.ui.fragment.SearchAudioBookFragment
+import com.example.spotifyassignment.viewmodel.SearchViewModel
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity(), SearchTypeAdapterListener {
+class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
 
-    private lateinit var rvSearchTypes: RecyclerView
-
-    private lateinit var searchTypeAdapter: SearchTypeAdapter
+    private lateinit var searchViewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,21 +35,47 @@ class SearchActivity : AppCompatActivity(), SearchTypeAdapterListener {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_search)
-        initRecyclerView()
+        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+
+        initViewPager()
     }
 
-    private fun initRecyclerView() {
-        rvSearchTypes = binding.rvSearchType
+    private fun initViewPager() {
+        val viewPager: ViewPager2 = binding.viewPagerTypes
+        val fragments = listOf(SearchAlbumFragment(), SearchArtistFragment(), SearchAudioBookFragment()) // Replace with your fragment instances
+        val adapter = ViewPagerAdapter(fragments, this)
+        viewPager.adapter = adapter
 
-        val types = arrayListOf("Tracks", "Artists", "Albums")
-        searchTypeAdapter = SearchTypeAdapter(types, this)
+        val tabLayout: TabLayout = binding.tabLayout
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.selected_tab_color))
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            val tabViewBinding = LayoutItemSearchTypeBinding.inflate(LayoutInflater.from(tabLayout.context), tabLayout, false)
 
-        rvSearchTypes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvSearchTypes.adapter = searchTypeAdapter
+            tabViewBinding.tvSearchType.text = searchViewModel.searchTabs[position]
+
+            tab.customView = tabViewBinding.root
+        }.attach()
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val tabTextView = tab?.customView?.findViewById<TextView>(R.id.tv_search_type)
+                tabTextView?.setTextColor(resources.getColor(R.color.selected_tab_color, null))
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                val tabTextView = tab?.customView?.findViewById<TextView>(R.id.tv_search_type)
+                tabTextView?.setTextColor(resources.getColor(R.color.white, null))
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // Not needed
+            }
+        })
+
+        tabLayout.getTabAt(0)?.customView?.findViewById<TextView>(R.id.tv_search_type)
+            ?.setTextColor(resources.getColor(R.color.selected_tab_color, null))
+
+        tabLayout.setPadding(resources.getDimensionPixelSize(R.dimen.tab_padding))
     }
 
-    override fun onClick(type: String) {
-        //todo render different fragments
-    }
 }

@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MusicApi {
-    @GET("/search")
+    @GET("search")
     fun getMusicItems(
         @Query("q") query: String,
         @Query("type") types: List<String>

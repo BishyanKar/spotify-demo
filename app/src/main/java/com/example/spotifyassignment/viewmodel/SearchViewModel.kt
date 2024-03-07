@@ -42,11 +42,15 @@ class SearchViewModel @Inject constructor(
     val playLists: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
     val shows: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
 
-    fun searchMusic(query: String, types: List<String>) {
+    private val searchTypes = arrayListOf("album", "artist", "playlist", "track", "show", "episode", "audiobook")
+
+    final val searchTabs = arrayListOf("Album", "Artist", "Playlist", "Track", "Show", "Episode", "AudioBook")
+
+    fun searchMusic(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
             searchRemoteRepository.getAllMusicItems(
                 query,
-                types
+                searchTypes
             )
         }
     }
