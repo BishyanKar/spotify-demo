@@ -1,18 +1,15 @@
 package com.example.spotifyassignment.repository
 
-import com.example.spotifyassignment.data.local.dao.AlbumDao
-import com.example.spotifyassignment.data.local.dao.ArtistDao
-import com.example.spotifyassignment.data.local.dao.AudioBookDao
-import com.example.spotifyassignment.data.local.dao.EpisodeDao
-import com.example.spotifyassignment.data.local.dao.PlayListDao
-import com.example.spotifyassignment.data.local.dao.ShowDao
-import com.example.spotifyassignment.data.local.dao.TrackDao
-import com.example.spotifyassignment.data.remote.AuthApi
+import ApiResponse
+import androidx.lifecycle.LiveData
 import com.example.spotifyassignment.data.remote.MusicApi
+import com.example.spotifyassignment.model.remote.SearchResponse
 import javax.inject.Inject
 
 class SearchRemoteRepository @Inject constructor(
-    private val musicApi: MusicApi,
-    private val authApi: AuthApi
+    private val musicApi: MusicApi
 ) {
+    fun getAllMusicItems(query: String, type: String): LiveData<ApiResponse<SearchResponse>> {
+        return musicApi.getMusicItems(query, type);
+    }
 }

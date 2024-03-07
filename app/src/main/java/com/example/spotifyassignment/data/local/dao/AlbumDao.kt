@@ -22,5 +22,5 @@ interface AlbumDao {
     fun getAllAlbums(): Flow<List<AlbumEntity>>
 
     @Query("select * from tbl_album where id=:albumId")
-    fun getAllAlbumById(albumId: String): Flow<AlbumEntity>
+    fun getAlbumById(albumId: String): Flow<AlbumEntity>
 }
