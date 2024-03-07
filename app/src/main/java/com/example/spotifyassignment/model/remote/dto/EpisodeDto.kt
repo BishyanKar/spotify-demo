@@ -28,7 +28,7 @@ class EpisodeDto {
 
     @SerializedName("href")
     @Expose
-    var href: String? = null
+    var episodeDetailsLink: String? = null
 
     @SerializedName("id")
     @Expose

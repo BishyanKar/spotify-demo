@@ -31,7 +31,7 @@ class TrackDto {
 
     @SerializedName("href")
     @Expose
-    var href: String? = null
+    var trackDetailsLink: String? = null
 
     @SerializedName("id")
     @Expose

@@ -15,7 +15,7 @@ class PlayListDto {
 
     @SerializedName("href")
     @Expose
-    var href: String? = null
+    var playListDetailsLink: String? = null
 
     @SerializedName("id")
     @Expose

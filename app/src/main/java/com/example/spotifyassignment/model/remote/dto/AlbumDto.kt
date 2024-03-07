@@ -20,7 +20,7 @@ class AlbumDto {
 
     @SerializedName("href")
     @Expose
-    var href: String? = null
+    var albumDetailsLink: String? = null
 
     @SerializedName("id")
     @Expose

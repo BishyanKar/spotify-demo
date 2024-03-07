@@ -36,7 +36,7 @@ class AudioBookDto {
 
     @SerializedName("href")
     @Expose
-    var href: String? = null
+    var audioBookDetailsLink: String? = null
 
     @SerializedName("id")
     @Expose

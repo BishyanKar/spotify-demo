@@ -14,7 +14,7 @@ class ArtistDto {
 
     @SerializedName("href")
     @Expose
-    var artistDetailLink: String? = null
+    var artistDetailsLink: String? = null
 
     @SerializedName("id")
     @Expose
