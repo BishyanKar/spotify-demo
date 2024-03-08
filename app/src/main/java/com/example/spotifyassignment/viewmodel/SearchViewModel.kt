@@ -25,6 +25,7 @@ import com.example.spotifyassignment.repository.SearchRemoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.stream.Collectors
 import javax.inject.Inject
 
@@ -111,148 +112,184 @@ class SearchViewModel @Inject constructor(
     }
 
     fun getAlbumEntitiesFromResponse(albumResponse: AlbumResponse): List<AlbumEntity> {
-        return albumResponse.items?.stream()?.map { albumDto ->
-            AlbumEntity(
-                albumDto.id,
-                albumDto.albumType,
-                albumDto.totalTracks,
-                albumDto.images?.stream()?.map {imageDto ->
-                    imageDto.url ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                albumDto.name,
-                albumDto.releaseDate,
-                albumDto.releaseDatePrecision,
-                albumDto.type,
-                albumDto.uri,
-                albumDto.artists?.stream()?.map {artistDto ->
-                    artistDto.name ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList()
-            )
-        }?.collect(Collectors.toList()) ?: ArrayList()
+        try {
+            return albumResponse.items?.stream()?.map { albumDto ->
+                AlbumEntity(
+                    albumDto.id,
+                    albumDto.albumType,
+                    albumDto.totalTracks,
+                    albumDto.images?.stream()?.map {imageDto ->
+                        imageDto.url ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    albumDto.name,
+                    albumDto.releaseDate,
+                    albumDto.releaseDatePrecision,
+                    albumDto.type,
+                    albumDto.uri,
+                    albumDto.artists?.stream()?.map {artistDto ->
+                        artistDto.name ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList()
+                )
+            }?.collect(Collectors.toList()) ?: ArrayList()
+        } catch (e: Exception) {
+            Timber.e("Error", e)
+            return ArrayList()
+        }
+
     }
 
     fun getArtistEntitiesFromResponse(artistResponse: ArtistResponse): List<ArtistEntity> {
-        return artistResponse.items?.stream()?.map { artistDto ->
-            ArtistEntity(
-                artistDto.id,
-                artistDto.followersDto?.total ?: 0,
-                artistDto.genres,
-                artistDto.images?.stream()?.map {imageDto ->
-                    imageDto.url ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                artistDto.name,
-                artistDto.popularity,
-                artistDto.type,
-                artistDto.uri
-            )
-        }?.collect(Collectors.toList()) ?: ArrayList()
+        try {
+            return artistResponse.items?.stream()?.map { artistDto ->
+                ArtistEntity(
+                    artistDto.id,
+                    artistDto.followersDto?.total ?: 0,
+                    artistDto.genres,
+                    artistDto.images?.stream()?.map {imageDto ->
+                        imageDto.url ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    artistDto.name,
+                    artistDto.popularity,
+                    artistDto.type,
+                    artistDto.uri
+                )
+            }?.collect(Collectors.toList()) ?: ArrayList()
+        } catch (e: Exception) {
+            Timber.e("Error", e)
+            return ArrayList()
+        }
     }
 
     fun getAudioBookEntitiesFromResponse(audioBookResponse: AudioBookResponse): List<AudioBookEntity> {
-        return audioBookResponse.items?.stream()?.map { audioBookDto ->
-            AudioBookEntity(
-                audioBookDto.id,
-                audioBookDto.authors?.stream()?.map {authorDto ->
-                    authorDto.name ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                audioBookDto.description,
-                audioBookDto.edition,
-                audioBookDto.explicit,
-                audioBookDto.images?.stream()?.map {imageDto ->
-                    imageDto.url ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                audioBookDto.mediaType,
-                audioBookDto.name,
-                audioBookDto.narrators?.stream()?.map {narratorDto->
-                    narratorDto.name ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                audioBookDto.publisher,
-                audioBookDto.type,
-                audioBookDto.uri
-            )
-        }?.collect(Collectors.toList()) ?: ArrayList()
+        try {
+            return audioBookResponse.items?.stream()?.map { audioBookDto ->
+                AudioBookEntity(
+                    audioBookDto.id,
+                    audioBookDto.authors?.stream()?.map {authorDto ->
+                        authorDto.name ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    audioBookDto.description,
+                    audioBookDto.edition,
+                    audioBookDto.explicit,
+                    audioBookDto.images?.stream()?.map {imageDto ->
+                        imageDto.url ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    audioBookDto.mediaType,
+                    audioBookDto.name,
+                    audioBookDto.narrators?.stream()?.map {narratorDto->
+                        narratorDto.name ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    audioBookDto.publisher,
+                    audioBookDto.type,
+                    audioBookDto.uri
+                )
+            }?.collect(Collectors.toList()) ?: ArrayList()
+        } catch (e: Exception) {
+            Timber.e("Error", e)
+            return ArrayList()
+        }
     }
 
     fun getEpisodeEntitiesFromResponse(episodeResponse: EpisodeResponse): List<EpisodeEntity> {
-        return episodeResponse.items?.stream()?.map { episodeDto ->
-            EpisodeEntity(
-                episodeDto.id,
-                episodeDto.description,
-                episodeDto.durationMs,
-                episodeDto.explicit,
-                episodeDto.images?.stream()?.map {imageDto ->
-                    imageDto.url ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                episodeDto.isPlayable,
-                episodeDto.language,
-                episodeDto.name,
-                episodeDto.releaseDate,
-                episodeDto.releaseDatePrecision,
-                episodeDto.type,
-                episodeDto.uri
-            )
-        }?.collect(Collectors.toList()) ?: ArrayList()
+        try {
+            return episodeResponse.items?.stream()?.map { episodeDto ->
+                EpisodeEntity(
+                    episodeDto.id,
+                    episodeDto.description,
+                    episodeDto.durationMs,
+                    episodeDto.explicit,
+                    episodeDto.images?.stream()?.map {imageDto ->
+                        imageDto.url ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    episodeDto.isPlayable,
+                    episodeDto.language,
+                    episodeDto.name,
+                    episodeDto.releaseDate,
+                    episodeDto.releaseDatePrecision,
+                    episodeDto.type,
+                    episodeDto.uri
+                )
+            }?.collect(Collectors.toList()) ?: ArrayList()
+        } catch (e: Exception) {
+            Timber.e("Error", e)
+            return ArrayList()
+        }
     }
 
     fun getPlayListEntitiesFromResponse(playListResponse: PlayListResponse): List<PlayListEntity> {
-        return playListResponse.items?.stream()?.map { playListDto ->
-            PlayListEntity(
-                playListDto.id,
-                playListDto.collaborative,
-                playListDto.description,
-                playListDto.images?.stream()?.map {imageDto ->
-                    imageDto.url ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                playListDto.name,
-                playListDto.owner?.displayName ?: "",
-                playListDto.public,
-                playListDto.tracks?.total ?: 0,
-                playListDto.type,
-                playListDto.uri
-            )
-        }?.collect(Collectors.toList()) ?: ArrayList()
+        try {
+            return playListResponse.items?.stream()?.map { playListDto ->
+                PlayListEntity(
+                    playListDto.id,
+                    playListDto.collaborative,
+                    playListDto.description,
+                    playListDto.images?.stream()?.map {imageDto ->
+                        imageDto.url ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    playListDto.name,
+                    playListDto.owner?.displayName ?: "",
+                    playListDto.public,
+                    playListDto.tracks?.total ?: 0,
+                    playListDto.type,
+                    playListDto.uri
+                )
+            }?.collect(Collectors.toList()) ?: ArrayList()
+        } catch (e: Exception) {
+            Timber.e("Error", e)
+            return ArrayList()
+        }
     }
 
     fun getShowEntitiesFromResponse(showResponse: ShowResponse): List<ShowEntity> {
-        return showResponse.items?.stream()?.map { showDto ->
-            ShowEntity(
-                showDto.id,
-                showDto.description,
-                showDto.explicit,
-                showDto.images?.stream()?.map {imageDto ->
-                    imageDto.url ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                showDto.mediaType,
-                showDto.name,
-                showDto.publisher,
-                showDto.type,
-                showDto.uri,
-                showDto.totalEpisodes
-            )
-        }?.collect(Collectors.toList()) ?: ArrayList()
+        try {
+            return showResponse.items?.stream()?.map { showDto ->
+                ShowEntity(
+                    showDto.id,
+                    showDto.description,
+                    showDto.explicit,
+                    showDto.images?.stream()?.map {imageDto ->
+                        imageDto.url ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    showDto.mediaType,
+                    showDto.name,
+                    showDto.publisher,
+                    showDto.type,
+                    showDto.uri,
+                    showDto.totalEpisodes
+                )
+            }?.collect(Collectors.toList()) ?: ArrayList()
+        } catch (e: Exception) {
+            Timber.e("Error", e)
+            return ArrayList()
+        }
     }
 
     fun getTrackEntitiesFromResponse(trackResponse: TrackResponse): List<TrackEntity> {
-        return trackResponse.items?.stream()?.map { trackDto ->
-            TrackEntity(
-                trackDto.id,
-                trackDto.album?.name ?: "",
-                trackDto.artists?.stream()?.map {artistDto ->
-                    artistDto.name ?: ""
-                }?.collect(Collectors.toList()) ?: ArrayList(),
-                trackDto.discNumber,
-                trackDto.durationMs,
-                trackDto.explicit,
-                trackDto.isPlayable,
-                trackDto.name,
-                trackDto.popularity,
-                trackDto.previewUrl,
-                trackDto.trackNumber,
-                trackDto.type,
-                trackDto.uri,
-                trackDto.isLocal
-            )
-        }?.collect(Collectors.toList()) ?: ArrayList()
+        try {
+            return trackResponse.items?.stream()?.map { trackDto ->
+                TrackEntity(
+                    trackDto.id,
+                    trackDto.album?.name ?: "",
+                    trackDto.artists?.stream()?.map {artistDto ->
+                        artistDto.name ?: ""
+                    }?.collect(Collectors.toList()) ?: ArrayList(),
+                    trackDto.discNumber,
+                    trackDto.durationMs,
+                    trackDto.explicit,
+                    trackDto.isPlayable,
+                    trackDto.name,
+                    trackDto.popularity,
+                    trackDto.previewUrl,
+                    trackDto.trackNumber,
+                    trackDto.type,
+                    trackDto.uri,
+                    trackDto.isLocal
+                )
+            }?.collect(Collectors.toList()) ?: ArrayList()
+        } catch (e: Exception) {
+            Timber.e("Error", e)
+            return ArrayList()
+        }
     }
 
     fun deleteAllCache() {

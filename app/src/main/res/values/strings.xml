@@ -8,4 +8,6 @@
     <string name="text_originalmix">OriginalMix</string>
     <string name="text_authentication_failed">Authentication Failed</string>
     <string name="text_error_msg">Something went wrong</string>
+    <string name="text_title">Title</string>
+    <string name="text_value">Value</string>
 </resources>

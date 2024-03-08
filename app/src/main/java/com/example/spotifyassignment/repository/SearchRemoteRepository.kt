@@ -10,6 +10,6 @@ class SearchRemoteRepository @Inject constructor(
     private val musicApi: MusicApi
 ) {
     fun getAllMusicItems(query: String, types: List<String>): LiveData<ApiResponse<SearchResponse>> {
-        return musicApi.getMusicItems(query, types);
+        return musicApi.getMusicItems(query, types.joinToString(","));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.spotifyassignment.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.example.spotifyassignment.Constants
 import com.example.spotifyassignment.databinding.FragmentSearchAlbumBinding
 import com.example.spotifyassignment.model.local.SearchItem
-import com.example.spotifyassignment.ui.adapter.SearchItemAdapter
+import com.example.spotifyassignment.ui.activity.SearchItemDetailActivity
+import com.example.spotifyassignment.ui.adapter.AlbumAdapter
 import com.example.spotifyassignment.ui.adapter.listener.SearchItemAdapterListener
 import com.example.spotifyassignment.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +32,7 @@ class SearchAlbumFragment : Fragment(), SearchItemAdapterListener {
     private lateinit var searchViewModel: SearchViewModel
 
     private lateinit var rvAlbum: RecyclerView
-    private lateinit var searchItemAdapter: SearchItemAdapter
+    private lateinit var albumAdapter: AlbumAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,25 +49,32 @@ class SearchAlbumFragment : Fragment(), SearchItemAdapterListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvAlbum = binding.rvAlbum
-        searchItemAdapter = SearchItemAdapter(this)
+        albumAdapter = AlbumAdapter(this)
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        rvAlbum.adapter = searchItemAdapter
+        rvAlbum.adapter = albumAdapter
         rvAlbum.layoutManager = GridLayoutManager(requireContext(), 2)
         searchViewModel.albums.observe(viewLifecycleOwner, Observer {entities ->
-            val searchItems = entities.stream().map {entity ->
-                SearchItem(
-                    entity.id,
-                    entity.name ?: "",
-                    entity.imgUrls?.get(0) ?: "",
-                    entity.artistNames?.joinToString(separator = ",") ?: "No Name",
-                    entity.releaseDate
-                )
-            }.collect(Collectors.toList())
-
-            searchItemAdapter.submitList(searchItems)
+            var searchItems = listOf<SearchItem>()
+            if (entities.isNotEmpty()) {
+                searchItems = entities.stream().map { entity ->
+                    SearchItem(
+                        entity.id,
+                        entity.name ?: "",
+                        entity.imgUrls?.isNotEmpty().let {
+                            if (it == true) {
+                                entity.imgUrls?.get(0) ?: ""
+                            } else ""
+                        },
+                        entity.artistNames?.joinToString(separator = ",") ?: "No Name",
+                        entity.releaseDate,
+                        type = "album"
+                    )
+                }.collect(Collectors.toList())
+            }
+            albumAdapter.submitList(searchItems)
         })
     }
 
@@ -85,7 +95,9 @@ class SearchAlbumFragment : Fragment(), SearchItemAdapterListener {
             .into(imageView)
     }
 
-    override fun onItemClick(id: String) {
-        TODO("Not yet implemented")
+    override fun onItemClick(searchItem: SearchItem) {
+        val intent = Intent(requireActivity(), SearchItemDetailActivity::class.java)
+        intent.putExtra(Constants.KEY_ITEM_EXTRA, searchItem)
+        startActivity(intent)
     }
 }

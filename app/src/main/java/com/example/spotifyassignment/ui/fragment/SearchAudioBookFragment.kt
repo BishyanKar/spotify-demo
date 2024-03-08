@@ -12,9 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchAudioBookFragment : Fragment() {
 
     private var _binding: FragmentSearchAudioBookBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,9 +20,8 @@ class SearchAudioBookFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchAudioBookBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
