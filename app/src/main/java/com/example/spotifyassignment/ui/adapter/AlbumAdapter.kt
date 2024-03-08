@@ -9,6 +9,11 @@ import com.example.spotifyassignment.databinding.LayoutItemSearchBinding
 import com.example.spotifyassignment.model.local.SearchItem
 import com.example.spotifyassignment.ui.adapter.listener.SearchItemAdapterListener
 
+/**
+ * Adapter for displaying album items in a RecyclerView.
+ *
+ * @param searchItemAdapterListener Listener for handling item click and image loading events.
+ */
 class AlbumAdapter(
     private val searchItemAdapterListener: SearchItemAdapterListener
 ): ListAdapter<SearchItem, AlbumAdapter.SearchItemViewHolder>(DiffUtilItemCallback) {

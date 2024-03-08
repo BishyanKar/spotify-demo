@@ -5,6 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifyassignment.databinding.LayoutItemDetailBinding
 
+/**
+ * Adapter for displaying item details in a RecyclerView.
+ *
+ * @param detailsSet List of strings representing details to be displayed.
+ */
 class ItemDetailAdapter(private val detailsSet: List<String>) :
     RecyclerView.Adapter<ItemDetailAdapter.ItemDetailViewHolder>() {
 
@@ -25,6 +30,7 @@ class ItemDetailAdapter(private val detailsSet: List<String>) :
         private val binding: LayoutItemDetailBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(detail: String) {
+
             binding.tvItemDetailTitle.text = detail.split(":")[0]
             binding.tvItemDetailValue.text = detail.split(":")[1]
         }

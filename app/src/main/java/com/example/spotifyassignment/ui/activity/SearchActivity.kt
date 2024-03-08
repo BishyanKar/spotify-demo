@@ -32,7 +32,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-
+/**
+ * Activity for searching music items.
+ */
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
 
@@ -40,6 +42,9 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var searchViewModel: SearchViewModel
 
+    /**
+     * Initializes the activity when created.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,11 +67,19 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * Hides the soft keyboard.
+     */
     private fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
 
+    /**
+     * Toggles the visibility of the progress bar.
+     *
+     * @param show Boolean indicating whether to show or hide the progress bar.
+     */
     private fun toggleProgressBar(show: Boolean) {
         if(show) {
             binding.llProgress.visibility = View.VISIBLE
@@ -75,6 +88,11 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initiates a search for music items based on the provided query.
+     *
+     * @param query The search query.
+     */
     private fun searchMusic(query: String) {
         searchViewModel.searchMusic(query).observe(this, Observer {apiResponse->
             toggleProgressBar(false)
@@ -94,6 +112,9 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * Initializes the ViewPager and sets up the TabLayout with associated fragments.
+     */
     private fun initViewPager() {
         val viewPager: ViewPager2 = binding.viewPagerTypes
         val fragments = listOf(

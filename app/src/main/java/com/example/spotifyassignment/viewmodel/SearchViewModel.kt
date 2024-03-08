@@ -29,13 +29,19 @@ import timber.log.Timber
 import java.util.stream.Collectors
 import javax.inject.Inject
 
+/**
+ * ViewModel responsible for managing search-related data and operations.
+ *
+ * @param searchRemoteRepository Repository for fetching search results from remote data source.
+ * @param searchLocalRepository Repository for accessing and modifying search results stored locally.
+ */
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchRemoteRepository: SearchRemoteRepository,
     private val searchLocalRepository: SearchLocalRepository
 ): ViewModel() {
-    //todo expose the cache list live datas
 
+    // LiveData for observing cached lists of various music items
     val tracks: LiveData<List<TrackEntity>> = searchLocalRepository.allTracks.asLiveData()
     val albums: LiveData<List<AlbumEntity>> = searchLocalRepository.allAlbums.asLiveData()
     val artists: LiveData<List<ArtistEntity>> = searchLocalRepository.allArtists.asLiveData()
@@ -44,10 +50,16 @@ class SearchViewModel @Inject constructor(
     val playLists: LiveData<List<PlayListEntity>> = searchLocalRepository.allPlayLists.asLiveData()
     val shows: LiveData<List<ShowEntity>> = searchLocalRepository.allShows.asLiveData()
 
+    // List of search types and their corresponding tabs
     private val searchTypes = arrayListOf("album", "artist", "playlist", "track", "show", "episode", "audiobook")
-
     final val searchTabs = arrayListOf("Album", "Artist", "Playlist", "Track", "Show", "Episode", "AudioBook")
 
+    /**
+     * Searches for music items based on the provided query.
+     *
+     * @param query The search query.
+     * @return LiveData representing the ApiResponse containing search results.
+     */
     fun searchMusic(query: String): LiveData<ApiResponse<SearchResponse>> {
         return searchRemoteRepository.getAllMusicItems(
             query,
@@ -55,6 +67,11 @@ class SearchViewModel @Inject constructor(
         )
     }
 
+    /**
+     * Updates the cache with the provided search response.
+     *
+     * @param searchResponse The search response containing updated data.
+     */
     fun updateCache(searchResponse: SearchResponse) {
         //assumed to be error free response, the check should happen in UI
         viewModelScope.launch(Dispatchers.IO) {
@@ -68,6 +85,17 @@ class SearchViewModel @Inject constructor(
             updateTrackCache(searchResponse.trackResponse ?: TrackResponse())
         }
     }
+
+    /**
+     * Deletes all cached music items.
+     */
+    fun deleteAllCache() {
+        viewModelScope.launch(Dispatchers.IO) {
+            searchLocalRepository.deleteAll()
+        }
+    }
+
+    // Functions to update cache with specific types of music items
 
     suspend fun updateAlbumCache(albumResponse: AlbumResponse) {
         searchLocalRepository.insertAllAlbums(
@@ -110,6 +138,8 @@ class SearchViewModel @Inject constructor(
             getTrackEntitiesFromResponse(trackResponse)
         )
     }
+
+    // Functions to convert DTOs to entities
 
     fun getAlbumEntitiesFromResponse(albumResponse: AlbumResponse): List<AlbumEntity> {
         try {
@@ -289,12 +319,6 @@ class SearchViewModel @Inject constructor(
         } catch (e: Exception) {
             Timber.e("Error", e)
             return ArrayList()
-        }
-    }
-
-    fun deleteAllCache() {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchLocalRepository.deleteAll()
         }
     }
 }

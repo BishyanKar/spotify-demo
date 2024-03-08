@@ -3,6 +3,27 @@ package com.example.spotifyassignment.model.local
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+
+/**
+ * Represents an item returned from a search.
+ *
+ * @param id The unique identifier of the search item.
+ * @param name The name of the search item.
+ * @param img The image URL of the search item.
+ * @param author The author of the search item.
+ * @param date The date of the search item.
+ * @param type The type of the search item.
+ * @param description The description of the search item.
+ * @param duration The duration of the search item.
+ * @param totalTracks The total tracks of the search item.
+ * @param totalFollowers The total followers of the search item.
+ * @param genres The genres of the search item.
+ * @param narrators The narrators of the search item.
+ * @param totalChapters The total chapters of the search item.
+ * @param albumName The album name of the search item.
+ * @param publisher The publisher of the search item.
+ * @param totalEpisodes The total episodes of the search item.
+ */
 @Parcelize
 class SearchItem(
     var id: String,
