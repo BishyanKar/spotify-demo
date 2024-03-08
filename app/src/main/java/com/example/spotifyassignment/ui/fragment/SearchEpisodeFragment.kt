@@ -65,6 +65,7 @@ class SearchEpisodeFragment : Fragment(), SearchItemAdapterListener {
                                 entity.imgUrls?.get(0) ?: ""
                             } else ""
                         },
+                        duration = ((entity.durationMs?.div(60*1000) ?: 0)).toString()+" min",
                         description = entity.description,
                         date = entity.releaseDate,
                         type = "episode"

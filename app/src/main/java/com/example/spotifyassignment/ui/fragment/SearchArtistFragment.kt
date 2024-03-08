@@ -67,9 +67,9 @@ class SearchArtistFragment : Fragment(), SearchItemAdapterListener {
                                 entity.imgUrls?.get(0) ?: ""
                             } else ""
                         },
-                        "",
-                        "",
-                        type = "artist"
+                        totalFollowers = entity.totalFollowers.toString(),
+                        genres = entity.genres?.joinToString(", "),
+                        type = "artist",
                     )
                 }.collect(Collectors.toList())
             }

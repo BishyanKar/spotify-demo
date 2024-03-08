@@ -65,8 +65,9 @@ class SearchShowFragment : Fragment(), SearchItemAdapterListener {
                                 entity.imgUrls?.get(0) ?: ""
                             } else ""
                         },
-                        entity.publisher ?: "",
-                        "",
+                        totalEpisodes = entity.totalEpisodes.toString(),
+                        description = entity.description,
+                        publisher = entity.publisher ?: "",
                         type = "show"
                     )
                 }.collect(Collectors.toList())

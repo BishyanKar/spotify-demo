@@ -61,8 +61,9 @@ class SearchTrackFragment : Fragment(), SearchItemAdapterListener {
                         entity.id,
                         entity.name ?: "",
                         entity.uri ?: "",
-                        entity.artistNames?.joinToString(",") ?: "",
-                        duration = entity.durationMs.toString(),
+                        entity.artistNames?.joinToString(", ") ?: "",
+                        albumName = entity.albumName,
+                        duration = ((entity.durationMs?.div(60*1000) ?: 0)).toString()+" min",
                         type = "track"
                     )
                 }.collect(Collectors.toList())

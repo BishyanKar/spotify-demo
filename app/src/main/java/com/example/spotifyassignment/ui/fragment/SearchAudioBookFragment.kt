@@ -67,8 +67,11 @@ class SearchAudioBookFragment : Fragment(), SearchItemAdapterListener {
                                 entity.imgUrls?.get(0) ?: ""
                             } else ""
                         },
-                        entity.authors?.joinToString(",") ?: "",
-                        "",
+                        entity.authors?.joinToString(", ") ?: "",
+                        narrators = entity.narrators?.joinToString(", "),
+                        totalChapters = entity.totalChapters.toString(),
+                        description = entity.description,
+                        publisher = entity.publisher,
                         type = "audioBook"
                     )
                 }.collect(Collectors.toList())

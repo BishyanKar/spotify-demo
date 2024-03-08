@@ -67,7 +67,8 @@ class SearchPlayListFragment : Fragment(), SearchItemAdapterListener {
                             } else ""
                         },
                         entity.ownerName ?: "",
-                        "",
+                        totalTracks = entity.totalTracks.toString(),
+                        description = entity.description,
                         type = "playlist"
                     )
                 }.collect(Collectors.toList())

@@ -3,8 +3,11 @@ package com.example.spotifyassignment.ui.activity
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.Glide
 import com.example.spotifyassignment.Constants
 import com.example.spotifyassignment.R
 import com.example.spotifyassignment.databinding.ActivitySearchItemDetailBinding
@@ -34,13 +37,30 @@ class SearchItemDetailActivity : AppCompatActivity() {
             searchItem = intent.getParcelableExtra<SearchItem>(Constants.KEY_ITEM_EXTRA)
         }
 
+        showImage()
         initRecyclerView()
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun showImage() {
+        val circularProgressDrawable = CircularProgressDrawable(this)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
+
+        Glide.with(this)
+            .load(searchItem?.img)
+            .placeholder(circularProgressDrawable)
+            .into(binding.ivItemDetail)
     }
 
     private fun initRecyclerView() {
         val itemList = arrayListOf<String>()
         if (Objects.nonNull(searchItem)) {
-            itemList.add("Name: ${searchItem?.name}")
+            itemList.addAll(searchItem?.getFormattedStrings() ?: arrayListOf())
         }
 
         itemDetailAdapter = ItemDetailAdapter(itemList)

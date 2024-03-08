@@ -44,7 +44,7 @@ class AudioBookAdapter(
     ): ViewHolder(binding.root) {
         fun bind(searchItem: SearchItem) {
             binding.tvItemSearchName.text = searchItem.name
-            binding.tvItemSearchLine1.text = searchItem.creator
+            binding.tvItemSearchLine1.text = searchItem.author
             binding.tvItemSearchLine2.text = searchItem.date
 
             searchItemAdapterListener.onLoadImage(searchItem.img, binding.ivItemSearch)
