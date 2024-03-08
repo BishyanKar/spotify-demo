@@ -66,6 +66,7 @@
     <color name="material_light_blue_A700">#ff0091ea</color>
     <color name="material_cyan_A700">#ff00b8d4</color>
 
+    <color name="material_green_100">#79718072</color>
     <color name="material_green_200">#ffa5d6a7</color>
     <color name="material_green_300">#ff81C784</color>
     <color name="material_green_400">#ff66BB6A</color>

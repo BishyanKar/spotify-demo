@@ -1,9 +1,13 @@
 package com.example.spotifyassignment.ui.activity
 
-import android.graphics.Color
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -14,7 +18,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.spotifyassignment.R
 import com.example.spotifyassignment.databinding.ActivitySearchBinding
 import com.example.spotifyassignment.databinding.LayoutItemSearchTypeBinding
-
 import com.example.spotifyassignment.ui.adapter.ViewPagerAdapter
 import com.example.spotifyassignment.ui.fragment.SearchAlbumFragment
 import com.example.spotifyassignment.ui.fragment.SearchArtistFragment
@@ -28,6 +31,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
@@ -46,11 +50,33 @@ class SearchActivity : AppCompatActivity() {
 
         initViewPager()
 
-        searchMusic("something")
+        binding.etSearch.setOnEditorActionListener(OnEditorActionListener { view, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard()
+                toggleProgressBar(true)
+                searchMusic(view.text.toString())
+                return@OnEditorActionListener true
+            }
+            false
+        })
+    }
+
+    private fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+    }
+
+    private fun toggleProgressBar(show: Boolean) {
+        if(show) {
+            binding.llProgress.visibility = View.VISIBLE
+        } else {
+            binding.llProgress.visibility = View.GONE
+        }
     }
 
     private fun searchMusic(query: String) {
         searchViewModel.searchMusic(query).observe(this, Observer {apiResponse->
+            toggleProgressBar(false)
             if (apiResponse.isSuccessful && apiResponse.body != null) {
                 val searchResponse = apiResponse.body
                 if (searchResponse.errorResponse != null) {
