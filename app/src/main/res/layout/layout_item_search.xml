@@ -40,7 +40,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_item_search_creator"
+        android:id="@+id/tv_item_search_line1"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -56,14 +56,14 @@
         />
 
     <TextView
-        android:id="@+id/tv_item_search_date"
+        android:id="@+id/tv_item_search_line2"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/cv_item_image"
         app:layout_constraintEnd_toEndOf="@id/cv_item_image"
-        app:layout_constraintTop_toBottomOf="@id/tv_item_search_creator"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_search_line1"
         android:layout_marginTop="5dp"
         app:layout_constraintHorizontal_bias="0.1"
         android:textSize="11sp"

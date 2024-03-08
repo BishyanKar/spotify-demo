@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             app:tabIndicatorHeight="0dp"
             app:layout_constraintTop_toTopOf="parent"
+            app:tabMode="scrollable"
             android:background="@color/material_grey_900"
             android:minHeight="?attr/actionBarSize" />
 

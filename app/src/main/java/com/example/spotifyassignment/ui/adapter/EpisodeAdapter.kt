@@ -9,9 +9,9 @@ import com.example.spotifyassignment.databinding.LayoutItemSearchBinding
 import com.example.spotifyassignment.model.local.SearchItem
 import com.example.spotifyassignment.ui.adapter.listener.SearchItemAdapterListener
 
-class AlbumAdapter(
+class EpisodeAdapter(
     private val searchItemAdapterListener: SearchItemAdapterListener
-): ListAdapter<SearchItem, AlbumAdapter.SearchItemViewHolder>(DiffUtilItemCallback) {
+): ListAdapter<SearchItem, EpisodeAdapter.SearchItemViewHolder>(DiffUtilItemCallback) {
 
     object DiffUtilItemCallback : DiffUtil.ItemCallback<SearchItem>() {
         override fun areItemsTheSame(
@@ -44,7 +44,7 @@ class AlbumAdapter(
     ): ViewHolder(binding.root) {
         fun bind(searchItem: SearchItem) {
             binding.tvItemSearchName.text = searchItem.name
-            binding.tvItemSearchLine1.text = searchItem.creator
+            binding.tvItemSearchLine1.text = searchItem.description
             binding.tvItemSearchLine2.text = searchItem.date
 
             searchItemAdapterListener.onLoadImage(searchItem.img, binding.ivItemSearch)

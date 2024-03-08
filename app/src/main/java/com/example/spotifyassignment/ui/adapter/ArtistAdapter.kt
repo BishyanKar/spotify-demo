@@ -44,8 +44,8 @@ class ArtistAdapter(
     ): ViewHolder(binding.root) {
         fun bind(searchItem: SearchItem) {
             binding.tvItemSearchName.text = searchItem.name
-            binding.tvItemSearchCreator.text = searchItem.creator
-            binding.tvItemSearchDate.text = searchItem.date
+            binding.tvItemSearchLine1.text = searchItem.creator
+            binding.tvItemSearchLine2.text = searchItem.date
 
             searchItemAdapterListener.onLoadImage(searchItem.img, binding.ivItemSearch)
 

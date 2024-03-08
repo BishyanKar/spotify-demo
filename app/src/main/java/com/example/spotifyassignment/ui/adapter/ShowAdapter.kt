@@ -9,9 +9,9 @@ import com.example.spotifyassignment.databinding.LayoutItemSearchBinding
 import com.example.spotifyassignment.model.local.SearchItem
 import com.example.spotifyassignment.ui.adapter.listener.SearchItemAdapterListener
 
-class AlbumAdapter(
+class ShowAdapter(
     private val searchItemAdapterListener: SearchItemAdapterListener
-): ListAdapter<SearchItem, AlbumAdapter.SearchItemViewHolder>(DiffUtilItemCallback) {
+): ListAdapter<SearchItem, ShowAdapter.SearchItemViewHolder>(DiffUtilItemCallback) {
 
     object DiffUtilItemCallback : DiffUtil.ItemCallback<SearchItem>() {
         override fun areItemsTheSame(

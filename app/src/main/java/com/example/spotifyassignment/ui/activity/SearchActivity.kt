@@ -19,6 +19,10 @@ import com.example.spotifyassignment.ui.adapter.ViewPagerAdapter
 import com.example.spotifyassignment.ui.fragment.SearchAlbumFragment
 import com.example.spotifyassignment.ui.fragment.SearchArtistFragment
 import com.example.spotifyassignment.ui.fragment.SearchAudioBookFragment
+import com.example.spotifyassignment.ui.fragment.SearchEpisodeFragment
+import com.example.spotifyassignment.ui.fragment.SearchPlayListFragment
+import com.example.spotifyassignment.ui.fragment.SearchShowFragment
+import com.example.spotifyassignment.ui.fragment.SearchTrackFragment
 import com.example.spotifyassignment.viewmodel.SearchViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -65,7 +69,15 @@ class SearchActivity : AppCompatActivity() {
 
     private fun initViewPager() {
         val viewPager: ViewPager2 = binding.viewPagerTypes
-        val fragments = listOf(SearchAlbumFragment(), SearchArtistFragment(), SearchAudioBookFragment()) // Replace with your fragment instances
+        val fragments = listOf(
+            SearchAlbumFragment(),
+            SearchArtistFragment(),
+            SearchPlayListFragment(),
+            SearchTrackFragment(),
+            SearchShowFragment(),
+            SearchEpisodeFragment(),
+            SearchAudioBookFragment()
+        )
         val adapter = ViewPagerAdapter(fragments, this)
         viewPager.adapter = adapter
 
