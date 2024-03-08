@@ -58,6 +58,8 @@ class SearchArtistFragment : Fragment(), SearchItemAdapterListener {
         searchViewModel.artists.observe(viewLifecycleOwner, Observer {entities ->
             var searchItems = listOf<SearchItem>()
             if (entities.isNotEmpty()) {
+                rvArtist.visibility = View.VISIBLE
+                binding.tvNoItems.visibility = View.GONE
                 searchItems = entities.stream().map { entity ->
                     SearchItem(
                         entity.id,
@@ -72,6 +74,9 @@ class SearchArtistFragment : Fragment(), SearchItemAdapterListener {
                         type = "artist",
                     )
                 }.collect(Collectors.toList())
+            } else {
+                rvArtist.visibility = View.GONE
+                binding.tvNoItems.visibility = View.VISIBLE
             }
             searchItemAdapter.submitList(searchItems)
         })

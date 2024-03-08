@@ -31,7 +31,7 @@ class SearchEpisodeFragment : Fragment(), SearchItemAdapterListener {
 
     private lateinit var searchViewModel: SearchViewModel
 
-    private lateinit var rvArtist: RecyclerView
+    private lateinit var rvEpisode: RecyclerView
     private lateinit var searchItemAdapter: EpisodeAdapter
 
     override fun onCreateView(
@@ -45,17 +45,19 @@ class SearchEpisodeFragment : Fragment(), SearchItemAdapterListener {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvArtist = binding.rvEpisode
+        rvEpisode = binding.rvEpisode
         searchItemAdapter = EpisodeAdapter(this)
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        rvArtist.adapter = searchItemAdapter
-        rvArtist.layoutManager = GridLayoutManager(requireContext(), 2)
+        rvEpisode.adapter = searchItemAdapter
+        rvEpisode.layoutManager = GridLayoutManager(requireContext(), 2)
         searchViewModel.episodes.observe(viewLifecycleOwner, Observer {entities ->
             var searchItems = listOf<SearchItem>()
             if (entities.isNotEmpty()) {
+                rvEpisode.visibility = View.VISIBLE
+                binding.tvNoItems.visibility = View.GONE
                 searchItems = entities.stream().map { entity ->
                     SearchItem(
                         entity.id,
@@ -71,6 +73,9 @@ class SearchEpisodeFragment : Fragment(), SearchItemAdapterListener {
                         type = "episode"
                     )
                 }.collect(Collectors.toList())
+            } else {
+                rvEpisode.visibility = View.GONE
+                binding.tvNoItems.visibility = View.VISIBLE
             }
             searchItemAdapter.submitList(searchItems)
         })

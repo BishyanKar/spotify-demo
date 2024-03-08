@@ -30,7 +30,7 @@ class SearchShowFragment : Fragment(), SearchItemAdapterListener {
     private val binding get() = _binding!!
     private lateinit var searchViewModel: SearchViewModel
 
-    private lateinit var rvArtist: RecyclerView
+    private lateinit var rvShow: RecyclerView
     private lateinit var searchItemAdapter: ShowAdapter
 
     override fun onCreateView(
@@ -45,17 +45,19 @@ class SearchShowFragment : Fragment(), SearchItemAdapterListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvArtist = binding.rvShow
+        rvShow = binding.rvShow
         searchItemAdapter = ShowAdapter(this)
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        rvArtist.adapter = searchItemAdapter
-        rvArtist.layoutManager = GridLayoutManager(requireContext(), 2)
+        rvShow.adapter = searchItemAdapter
+        rvShow.layoutManager = GridLayoutManager(requireContext(), 2)
         searchViewModel.shows.observe(viewLifecycleOwner, Observer {entities ->
             var searchItems = listOf<SearchItem>()
             if (entities.isNotEmpty()) {
+                rvShow.visibility = View.VISIBLE
+                binding.tvNoItems.visibility = View.GONE
                 searchItems = entities.stream().map { entity ->
                     SearchItem(
                         entity.id,
@@ -71,6 +73,9 @@ class SearchShowFragment : Fragment(), SearchItemAdapterListener {
                         type = "show"
                     )
                 }.collect(Collectors.toList())
+            } else {
+                rvShow.visibility = View.GONE
+                binding.tvNoItems.visibility = View.VISIBLE
             }
             searchItemAdapter.submitList(searchItems)
         })

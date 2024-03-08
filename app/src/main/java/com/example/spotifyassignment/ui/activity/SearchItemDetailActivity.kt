@@ -51,10 +51,17 @@ class SearchItemDetailActivity : AppCompatActivity() {
         circularProgressDrawable.centerRadius = 30f
         circularProgressDrawable.start()
 
-        Glide.with(this)
-            .load(searchItem?.img)
-            .placeholder(circularProgressDrawable)
-            .into(binding.ivItemDetail)
+        if (searchItem?.type?.contains("track") == true) {
+            Glide.with(this)
+                .load(R.drawable.ic_track_img)
+                .placeholder(circularProgressDrawable)
+                .into(binding.ivItemDetail)
+        } else {
+            Glide.with(this)
+                .load(searchItem?.img)
+                .placeholder(circularProgressDrawable)
+                .into(binding.ivItemDetail)
+        }
     }
 
     private fun initRecyclerView() {

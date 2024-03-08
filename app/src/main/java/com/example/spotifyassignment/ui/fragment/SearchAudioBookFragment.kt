@@ -31,7 +31,7 @@ class SearchAudioBookFragment : Fragment(), SearchItemAdapterListener {
 
     private lateinit var searchViewModel: SearchViewModel
 
-    private lateinit var rvArtist: RecyclerView
+    private lateinit var rvAudioBook: RecyclerView
     private lateinit var searchItemAdapter: AudioBookAdapter
 
     override fun onCreateView(
@@ -47,17 +47,19 @@ class SearchAudioBookFragment : Fragment(), SearchItemAdapterListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvArtist = binding.rvAudioBook
+        rvAudioBook = binding.rvAudioBook
         searchItemAdapter = AudioBookAdapter(this)
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        rvArtist.adapter = searchItemAdapter
-        rvArtist.layoutManager = GridLayoutManager(requireContext(), 2)
+        rvAudioBook.adapter = searchItemAdapter
+        rvAudioBook.layoutManager = GridLayoutManager(requireContext(), 2)
         searchViewModel.audioBooks.observe(viewLifecycleOwner, Observer {entities ->
             var searchItems = listOf<SearchItem>()
             if (entities.isNotEmpty()) {
+                rvAudioBook.visibility = View.VISIBLE
+                binding.tvNoItems.visibility = View.GONE
                 searchItems = entities.stream().map { entity ->
                     SearchItem(
                         entity.id,
@@ -75,6 +77,9 @@ class SearchAudioBookFragment : Fragment(), SearchItemAdapterListener {
                         type = "audioBook"
                     )
                 }.collect(Collectors.toList())
+            } else {
+                rvAudioBook.visibility = View.GONE
+                binding.tvNoItems.visibility = View.VISIBLE
             }
             searchItemAdapter.submitList(searchItems)
         })

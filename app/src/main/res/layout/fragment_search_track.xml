@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.SearchAlbumFragment">
 
+    <TextView
+        android:id="@+id/tv_no_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:text="@string/text_no_items_to_show"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_track"
         android:layout_width="match_parent"

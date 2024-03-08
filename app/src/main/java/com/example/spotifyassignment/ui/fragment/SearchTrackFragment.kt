@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.example.spotifyassignment.Constants
+import com.example.spotifyassignment.R
 import com.example.spotifyassignment.databinding.FragmentSearchTrackBinding
 import com.example.spotifyassignment.model.local.SearchItem
 import com.example.spotifyassignment.ui.activity.SearchItemDetailActivity
@@ -30,7 +31,7 @@ class SearchTrackFragment : Fragment(), SearchItemAdapterListener {
     private val binding get() = _binding!!
     private lateinit var searchViewModel: SearchViewModel
 
-    private lateinit var rvArtist: RecyclerView
+    private lateinit var rvTrack: RecyclerView
     private lateinit var searchItemAdapter: TrackAdapter
 
     override fun onCreateView(
@@ -45,17 +46,19 @@ class SearchTrackFragment : Fragment(), SearchItemAdapterListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvArtist = binding.rvTrack
+        rvTrack = binding.rvTrack
         searchItemAdapter = TrackAdapter(this)
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        rvArtist.adapter = searchItemAdapter
-        rvArtist.layoutManager = GridLayoutManager(requireContext(), 2)
+        rvTrack.adapter = searchItemAdapter
+        rvTrack.layoutManager = GridLayoutManager(requireContext(), 2)
         searchViewModel.tracks.observe(viewLifecycleOwner, Observer {entities ->
             var searchItems = listOf<SearchItem>()
             if (entities.isNotEmpty()) {
+                rvTrack.visibility = View.VISIBLE
+                binding.tvNoItems.visibility = View.GONE
                 searchItems = entities.stream().map { entity ->
                     SearchItem(
                         entity.id,
@@ -67,6 +70,9 @@ class SearchTrackFragment : Fragment(), SearchItemAdapterListener {
                         type = "track"
                     )
                 }.collect(Collectors.toList())
+            } else {
+                rvTrack.visibility = View.GONE
+                binding.tvNoItems.visibility = View.VISIBLE
             }
             searchItemAdapter.submitList(searchItems)
         })
@@ -84,7 +90,7 @@ class SearchTrackFragment : Fragment(), SearchItemAdapterListener {
         circularProgressDrawable.start()
 
         Glide.with(this)
-            .load(url)
+            .load(R.drawable.ic_track_img)
             .placeholder(circularProgressDrawable)
             .into(imageView)
     }

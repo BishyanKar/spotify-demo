@@ -49,6 +49,7 @@ class SearchActivity : AppCompatActivity() {
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
 
         initViewPager()
+        toggleProgressBar(false)
 
         binding.etSearch.setOnEditorActionListener(OnEditorActionListener { view, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
