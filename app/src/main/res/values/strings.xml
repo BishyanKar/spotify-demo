@@ -11,4 +11,5 @@
     <string name="text_title">Title</string>
     <string name="text_value">Value</string>
     <string name="text_no_items_to_show">No items to show</string>
+    <string name="text_logging_in">Logging In...</string>
 </resources>

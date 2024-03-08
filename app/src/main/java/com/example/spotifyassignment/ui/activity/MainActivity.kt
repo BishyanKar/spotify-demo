@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                     editor.putLong(Constants.KEY_ACCESS_TOKEN_EXPIRY_TIME, tokenResponse.expiresIn ?: 3600)
                     editor.putLong(Constants.KEY_ACCESS_TOKEN_CREATED_AT_MILLIS, System.currentTimeMillis())
                     editor.apply()
+                    openSearchScreen()
                 }
             } else {
                 Timber.e(apiResponse.errorMessage)
